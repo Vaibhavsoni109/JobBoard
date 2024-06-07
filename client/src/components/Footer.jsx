@@ -65,7 +65,7 @@ const Footer = () => {
               <CustomButton
                 title='Subscribe'
                 containerStyles={
-                  "block bg-[#001a36] text-white px-5 py-2.5 text-md rounded hover:bg-blue-800 focus:potline-none flex-col items-center mt-2"
+                  "block bg-[#001a36] text-white px-5 py-2.5 text-md rounded-lg hover:bg-blue-800 focus:potline-none flex-col items-center mt-2"
                 }
               />
             </div>
