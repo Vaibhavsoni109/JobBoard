@@ -50,7 +50,7 @@ const Header = ({
       >
         <div className='w-full z-10'>
           <div className='mb-8'>
-            <p className='text-slate-700 font-bold text-4xl'>{title}</p>
+            <p className='text-slate-700 font-bold text-4xl ml-32'>{title}</p>
           </div>
 
           <div className='w-full flex items-center justify-around bg-white px-2 md:px-5 py-2.5 md:py-6 shadow-2xl rounded-full'>
