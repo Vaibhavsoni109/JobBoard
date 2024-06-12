@@ -11,8 +11,6 @@ import { useSelector } from "react-redux";
 
 function MenuList({ user, onClick }) {
   const handleLogout = () => {};
-  console.log(user.firstName)
- 
 
   return (
     <div>
@@ -50,7 +48,6 @@ function MenuList({ user, onClick }) {
           leaveTo='transform opacity-0 scale-95'
         >
           <Menu.Items className='absolute z-50 right-2 mt-2 w-56 origin-top-right divide-y dividfe-gray-100 rounded-md bg-white shadow-lg focus:outline-none '>
-      
             <div className='p-1 '>
               <Menu.Item>
                 {({ active }) => (
@@ -102,8 +99,6 @@ function MenuList({ user, onClick }) {
 const Navbar = () => {
   const user = useSelector((state) => state.user);
   const [isOpen, setIsOpen] = useState(false);
-  console.log(user)
-  const user1=user.user;
 
   const handleCloseNavbar = () => {
     setIsOpen((prev) => !prev);
@@ -111,7 +106,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className='relative bg-[#f7fdfd] z-50 w-full'>
+      <div className='relative bg-[#f7fdfd] z-50'>
         <nav className='container mx-auto flex items-center justify-between p-5'>
           <div>
             <Link to='/' className='text-blue-600 font-bold text-xl'>
@@ -147,9 +142,6 @@ const Navbar = () => {
                 <MenuList user={user} />
               </div>
             )}
-            {/* <div>
-                <MenuList user={user1} />
-              </div> */}
           </div>
 
           <button
