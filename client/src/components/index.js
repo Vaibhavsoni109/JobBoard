@@ -3,6 +3,10 @@ import Navbar from "./Navbar";
 import JobCard from "./JobCard";
 import ListBox from "./ListBox";
 import CustomButton from "./CustomButton";
-
+import CompanyCard from "./CompanyCard";
+import Header from "./Header";
 import SignUp from "./SignUp";
-export  {Footer,Navbar,SignUp,JobCard, ListBox,CustomButton};
+import Loading from "./Loading";
+import TextInput from "./TextInput";
+import JobTypes from "./JobTypes";
+export  {Footer,Navbar,SignUp,JobCard, ListBox,CustomButton,CompanyCard,Header,Loading,TextInput,JobTypes};
