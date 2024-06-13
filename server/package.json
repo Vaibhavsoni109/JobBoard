@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "This is the Backend code for Our job app",
   "main": "index.js",
+  "type": "module",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Vaibhav",
