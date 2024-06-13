@@ -1,55 +1,98 @@
-import Users from "../models/userModel";
+import Users from "../models/userModel.js";
 
 
-export const register =async (req, res, next) => {
-    const { firstname, lastname, email, password } = req.body
+export const register = async (req, res, next) => {
+    const { firstName, lastName, email, password } = req.body;
 
-    //validate field
-    if (!firstname) {
-        next("First Name is Require");
+    //validate fileds
+  
+    if (!firstName) {
+      next("First Name is required");
     }
-    if (!lastname) {
-        next("last Name is Require")
-    }
-
     if (!email) {
-        next("email is Require")
+      next("Email is required");
+    }
+    if (!lastName) {
+      next("Last Name is required");
     }
     if (!password) {
-        next("password is Require")
+      next("Password is required");
     }
+  
     try {
-const userExists=await Users.findOne({email})
-if(userExists)
-    {
-        next("user With this email is already exists");
-    }
-    const user=await Users.create({
-        firstname,
-        lastname,
+      const userExist = await Users.findOne({ email });
+  
+      if (userExist) {
+        next("Email Address already exists");
+        return;
+      }
+  
+      const user = await Users.create({
+        firstName,
+        lastName,
         email,
-        password
-    })
-
-    const token=user.createJWT();
-
-    res.status(201).send({
-        success:true,
-        message:"Account has been create succesfully",
-        user:{
-            _id:user._id,
-            firstname:user.firstname,
-            lastname:user.lastname,
-            email:user.email,
-            accountType:user.accountType
-
-        },token,
-    })
+        password,
+      });
+  
+      // user token
+      const token = await user.createJWT();
+  
+      res.status(201).json({
+        success: true,
+        message: "Account created successfully",
+        user: {
+          _id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          accountType: user.accountType,
+        },
+        token,
+      });
     } catch (error) {
         console.log(error)
-        res.status(404).json({message:error.message})
+        res.status(404).json({ message: error.message })
     }
 }
 
-export const signIn = (req, res, next) => {
+export const signIn = async (req, res, next) => {
+    const { email, password } = req.body;
+    try {
+        if (!email || !password) {
+            next("Plz Enter the Credential for login")
+            return;
+        }
+        // find user by email
+        const user = await Users.findOne({ email }).select("+password");
+
+        if (!user) {
+            next("Invalid - email or password");
+            return;
+        }
+
+        // compare password
+        const isMatch = await user.comparePassword(password);
+
+        if (!isMatch) {
+            next("Invalid email or password");
+            return;
+        }
+
+        user.password = undefined;
+
+        const token = user.createJWT();
+
+        res.status(201).json({
+            success: true,
+            message: "Login successfully",
+            user,
+            token,
+        });
+
+
+    } catch (error) {
+        console.log(error)
+        res.status(404).json({ message: error.message })
+
+    }
 }

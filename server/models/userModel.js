@@ -5,11 +5,11 @@ import bcrypt from "bcryptjs"
 import JWT from "jsonwebtoken"
 
 const userSchema = new Schema({
-    firstname: {
+    firstName: {
         type: String,
         required: [true, "FirstName is Require"]
     },
-    lastname: {
+    lastName: {
         type: String,
         required: [true, "LastName is Require"]
     },
@@ -68,7 +68,7 @@ userSchema.methods.comparePassword = async function (userPassword) {
 
 // JWT Toekn
 
-userSchema.methods.createToken = async () => {
+userSchema.methods.createJWT = async () => {
     return JWT.sign(
         { userId: this._id },
         process.env.JWT_SECRET_KEY,

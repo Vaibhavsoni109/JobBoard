@@ -6,6 +6,7 @@ import bodyParser from "body-parser"
 import xss from "xss-clean"
 import mongooseSanitize from "express-mongo-sanitize"
 import dbConnection from "./dbConfig/dbConnection.js"
+import router from "./routes/authRoutes.js"
 
 const port = process.env.PORT || 5000;
 dotenv.config();
@@ -29,6 +30,7 @@ app.use(express.json({ limit: "10mb" }));
 app.use(morgan('dev'))
 
 
+app.use(router);
 
 app.get('/', (req, res) => {
     res.send("helllo world")
