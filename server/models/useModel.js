@@ -47,4 +47,36 @@ const userSchema = new Schema({
     about: {
         type: String
     }
+}
+    ,
+    { timestamps: true }
+)
+userSchema.pre("save", async function () {
+    if (!this.isModified) {
+        return;
+    }
+    const salt = await bcrypt.genSalt(10)
+    this.password = await bcrypt.hash(this.password, salt)
 })
+
+//Compare the password
+
+userSchema.methods.comparePassword = async function (userPassword) {
+    const isMatch = await bcrypt.compare(userPassword, this.password)
+    return isMatch;
+}
+
+// JWT Toekn
+
+userSchema.methods.createToken = async () => {
+    return JWT.sign(
+        { userId: this._id },
+        process.env.JWT_SECRET_KEY,
+        {
+            expiresIn: process.env.JWT_EXPIRES_IN
+        }
+    )
+}
+
+const users = mongoose.model("Users", userSchema)
+export default users
