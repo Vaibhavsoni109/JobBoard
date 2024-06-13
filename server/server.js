@@ -8,7 +8,7 @@ import mongooseSanitize from "express-mongo-sanitize"
 import dbConnection from "./dbConfig/dbConnection.js"
 import router from "./routes/authRoutes.js"
 
-const port = process.env.PORT || 5000;
+const port = 8800;
 dotenv.config();
 const app = express();
 
@@ -37,5 +37,5 @@ app.get('/', (req, res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`)
+    console.log(`Example app listening on port http://localhost:${port}`)
 })
