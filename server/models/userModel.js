@@ -78,5 +78,5 @@ userSchema.methods.createToken = async () => {
     )
 }
 
-const users = mongoose.model("Users", userSchema)
-export default users
+const Users = mongoose.model("Users", userSchema)
+export default Users
