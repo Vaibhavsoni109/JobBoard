@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 function MenuList({ user, onClick }) {
   const handleLogout = () => {};
 
+
   return (
     <div>
       <Menu as='div' className='inline-block text-left'>
@@ -19,15 +20,15 @@ function MenuList({ user, onClick }) {
           <Menu.Button className='inline-flex gap-2 w-full rounded-md bg-white md:px-4 py-2 text-sm font-medium text-slate-700 hover:bg-opacity-20 '>
             <div className='leading[80px] flex flex-col items-start'>
               <p className='text-sm font-semibold '>
-                {user?.firstName ?? user?.name}
+                {user.user?.firstName ?? user?.name}
               </p>
               <span className='text-sm text-blue-600 '>
-                {user?.jobTitle ?? user?.email}
+                {user.user?.jobTitle ?? user?.email}
               </span>
             </div>
 
             <img
-              src={user?.profileUrl}
+              src={user.user?.profileUrl}
               alt='user profile'
               className='w-10 h-10 rounded-full object-cover '
             />
@@ -98,6 +99,7 @@ function MenuList({ user, onClick }) {
 }
 const Navbar = () => {
   const user = useSelector((state) => state.user);
+  console.log(user)
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseNavbar = () => {
@@ -130,7 +132,7 @@ const Navbar = () => {
           </ul>
 
           <div className='hidden lg:block'>
-            {!user?.token ? (
+            {!user.user?.token ? (
               <Link to='/user-auth'>
                 <CustomButton
                   title='Sign In'
@@ -143,6 +145,7 @@ const Navbar = () => {
               </div>
             )}
           </div>
+          
 
           <button
             className='block lg:hidden text-slate-900'
