@@ -68,15 +68,11 @@ userSchema.methods.comparePassword = async function (userPassword) {
 
 // JWT Toekn
 
-userSchema.methods.createJWT = async () => {
-    return JWT.sign(
-        { userId: this._id },
-        process.env.JWT_SECRET_KEY,
-        {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        }
-    )
-}
+userSchema.methods.createJWT = function () {
+    return JWT.sign({ userId: this._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
+  };
 
 const Users = mongoose.model("Users", userSchema)
 export default Users
