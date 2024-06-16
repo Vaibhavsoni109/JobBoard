@@ -56,14 +56,10 @@ comapanySchema.methods.comparePassword = async function (userPassword) {
 
 // JWT Toekn
 
-comapanySchema.methods.createToken = async () => {
-    return JWT.sign(
-        { userId: this._id },
-        process.env.JWT_SECRET_KEY,
-        {
-            expiresIn: process.env.JWT_EXPIRES_IN
-        }
-    )
-}
+comapanySchema.methods.createJWT = function () {
+    return JWT.sign({ userId: this._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
+  };
 const Companies = mongoose.model("Companies", comapanySchema)
 export default Companies
