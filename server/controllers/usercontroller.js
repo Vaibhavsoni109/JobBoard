@@ -15,7 +15,7 @@ export const updateUser = async (req, res, next) => {
 
   try {
     if (!firstName || !lastName || !email || !contact || !jobTitle || !about) {
-      next("Please provide all required fields");
+      res.json("Please provide all required fields");
     }
 
     const id = req.body.user.userId;
@@ -38,15 +38,15 @@ export const updateUser = async (req, res, next) => {
 
     const user = await Users.findByIdAndUpdate(id, updateUser, { new: true });
 
-    // const token = user.createJWT();
+    const token = user.createJWT();
 
-    // user.password = undefined;
+    user.password = undefined;
 
     res.status(200).json({
       sucess: true,
       message: "User updated successfully",
       user,
-    //   token,
+      token,
     });
   } catch (error) {
     console.log(error);

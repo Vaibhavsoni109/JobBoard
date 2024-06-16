@@ -35,8 +35,8 @@ export const register = async (req, res, next) => {
     });
 
     // user token
-    const token = company.createJWT();
 
+    const token = company.createJWT();
     res.status(201).json({
       success: true,
       message: "Company Account Created Successfully",

@@ -1,4 +1,3 @@
-import express from "express"
 
 import express, { Router } from "express";
 import { rateLimit } from "express-rate-limit";
