@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URl = "http://loalhost:5000/api-v1";
+const API_URl = "http://localhost:5000/api-v1";
 
 
 export const API = axios.create({
@@ -20,7 +20,7 @@ export const apiRequest = async ({ url, token, data, method }) => {
 
             }
         })
-
+return result?.data
     } catch (error) {
         const err = error.response.data;
         console.log(error);

@@ -5,6 +5,8 @@ import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import TextInput from "./TextInput";
 import CustomButton from "./CustomButton";
+import { apiRequest } from "../utils";
+import { Login } from "../redux/userSlice";
 
 const SignUp = ({ open, setOpen }) => {
   const dispatch = useDispatch();
@@ -27,7 +29,7 @@ const SignUp = ({ open, setOpen }) => {
 
   const closeModal = () => setOpen(false);
 
-  const onSubmit = (data) => {
+  const onSubmit = async(data) => {
     let URL=null;
     if(isRegister)
       {
@@ -37,7 +39,7 @@ const SignUp = ({ open, setOpen }) => {
           }
           else
           {
-            URL="/companies/regster";
+            URL="/companies/register";
           }
       }
       else{
@@ -51,7 +53,25 @@ const SignUp = ({ open, setOpen }) => {
           }
       }
 try {
-  
+  const res= await apiRequest({
+    url:URL,
+    data:data,
+    method:"POST",
+
+  })
+  console.log(res);
+  if(res?.status==="failed")
+    {
+      setErrMsg(res?.message);
+    }
+    else
+    {
+      setErrMsg("")
+      const data={ token: res.token,...res?.user}
+      dispatch(Login(data))
+      localStorage.setItem("userInfo",JSON.stringify(data));
+      window.location.replace(form);
+    }
 } catch (error) {
   console.log(error);
 }
