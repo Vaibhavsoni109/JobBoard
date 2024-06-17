@@ -50,7 +50,11 @@ const SignUp = ({ open, setOpen }) => {
             URL="/companies/login";
           }
       }
-
+try {
+  
+} catch (error) {
+  console.log(error);
+}
   };
 
   return (
