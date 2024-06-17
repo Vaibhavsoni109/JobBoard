@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useForm } from "react-hook-form";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import TextInput from "./TextInput";
 import CustomButton from "./CustomButton";
@@ -16,6 +16,7 @@ const SignUp = ({ open, setOpen }) => {
   const [accountType, setAccountType] = useState("seeker");
 
   const [errMsg, setErrMsg] = useState("");
+  const Navigate =useNavigate();
   const {
     register,
     handleSubmit,
@@ -25,7 +26,7 @@ const SignUp = ({ open, setOpen }) => {
   } = useForm({
     mode: "onChange",
   });
-  let from = location.state?.from?.pathname || "/";
+  let form = location.state?.from?.pathname || "/";
 
   const closeModal = () => setOpen(false);
 
@@ -70,6 +71,7 @@ try {
       const data={ token: res.token,...res?.user}
       dispatch(Login(data))
       localStorage.setItem("userInfo",JSON.stringify(data));
+      Navigate('/find-jobs')
       window.location.replace(form);
     }
 } catch (error) {

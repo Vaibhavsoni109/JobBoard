@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 
+
 const initialState = {
   user: JSON.parse(window?.localStorage.getItem("userInfo")) ?? {},
 };
@@ -11,6 +12,7 @@ const userSlice = createSlice({
   reducers: {
     login(state, action) {
       state.user = action.payload.user;
+  
     },
     logout(state) {
       state.user = null;
