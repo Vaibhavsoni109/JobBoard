@@ -180,11 +180,16 @@ const CompnayForm = ({ open, setOpen }) => {
                     </div>
 
                     <div className='mt-4'>
+                      {
+                        isLoading ?(
+                          <Loading/>
+                        ):
                       <CustomButton
                         type='submit'
                         containerStyles='inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-8 py-2 text-sm font-medium text-white hover:bg-[#1d4fd846] hover:text-[#1d4fd8] focus:outline-none '
                         title={"Submit"}
                       />
+                      }
                     </div>
                   </form>
                 </Dialog.Panel>
@@ -233,8 +238,9 @@ const CompanyProfile = () => {
         }
        
     }
-
+// console.log(info.profileUrl)
   useEffect(() => {
+    
   fetchCompany();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, []);
@@ -293,7 +299,7 @@ const CompanyProfile = () => {
         <p>Jobs Posted</p>
 
         <div className='flex flex-wrap gap-3'>
-          {jobs?.map((job, index) => {
+          {info?.jobsPosts?.map((job, index) => {
             const data = {
               name: info?.name,
               email: info?.email,

@@ -6,11 +6,14 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { AiOutlineClose, AiOutlineLogout } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
-import { users } from "../utils/data";
 import { useSelector,useDispatch } from "react-redux";
 import { Logout } from "../redux/userSlice";
 
+
+
 function MenuList({ user, onClick }) {
+
+  // console.log(user.profileUrl)
   const dispatch=useDispatch();
   const handleLogout = () => {
     dispatch(Logout())
@@ -25,15 +28,15 @@ function MenuList({ user, onClick }) {
           <Menu.Button className='inline-flex gap-2 w-full rounded-md bg-white md:px-4 py-2 text-sm font-medium text-slate-700 hover:bg-opacity-20 '>
             <div className='leading[80px] flex flex-col items-start'>
               <p className='text-sm font-semibold '>
-                {user.user?.firstName ?? user?.name}
+                {user?.firstName ?? user?.name}
               </p>
               <span className='text-sm text-blue-600 '>
-                {user.user?.jobTitle ?? user?.email}
+                {user?.jobTitle ?? user?.email}
               </span>
             </div>
 
             <img
-              src={user.user?.profileUrl}
+              src={user?.profileUrl}
               alt='user profile'
               className='w-10 h-10 rounded-full object-cover '
             />
@@ -104,7 +107,7 @@ function MenuList({ user, onClick }) {
 }
 const Navbar = () => {
   const {user} = useSelector((state) => state.user);
-  console.log(user)
+
   const [isOpen, setIsOpen] = useState(false);
 
   const handleCloseNavbar = () => {
