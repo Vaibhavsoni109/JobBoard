@@ -11,13 +11,13 @@ const JobCard = ({ job }) => {
       >
         <div className='flex gap-3'>
           <img
-            src={job?.company?.profileUrl}
-            alt={job?.company?.name}
+            src={job?.logo}
+            alt={job?.name}
             className='w-14 h-14'
           />
 
           <div className=''>
-            <p className='text-lg font-semibold truncate'>{job?.jobTitle}</p>
+            <p className='text-lg font-semibold '>{job?.jobTitle}</p>
             <span className='flex gap-2 items-center'>
               <GoLocation className='text-slate-900 text-sm' />
               {job?.location}
@@ -27,7 +27,7 @@ const JobCard = ({ job }) => {
 
         <div className='py-3'>
           <p className='text-sm'>
-            {job?.detail[0]?.desc?.slice(0, 150) + "..."}
+            {job?.detail[0]?.desc?.slice(0, 160) + "....."}
           </p>
         </div>
 
@@ -35,7 +35,7 @@ const JobCard = ({ job }) => {
           <p className='bg-[#1d4fd826] text-[#1d4fd8] py-0.5 px-1.5 rounded font-semibold text-sm'>
             {job?.jobType}
           </p>
-          <span className='text-gray-500 text-sm'>
+          <span className='text-gray-600 text-sm'>
             {moment(job?.createdAt).fromNow()}
           </span>
         </div>
