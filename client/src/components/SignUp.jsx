@@ -71,7 +71,7 @@ try {
       const data={ token: res.token,...res?.user}
       dispatch(Login(data))
       localStorage.setItem("userInfo",JSON.stringify(data));
-      Navigate('/find-jobs')
+    
       window.location.replace(form);
     }
 } catch (error) {
