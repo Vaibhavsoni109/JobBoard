@@ -29,7 +29,7 @@ return result?.data
 }
 
 
-export const handleFile = async (uploadFile) => {
+export const handleFileUpload = async (uploadFile) => {
     const formData = new FormData();
     formData.append("file", uploadFile);
     formData.append("upload_preset", "jobfinder");

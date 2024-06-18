@@ -8,7 +8,7 @@ import { FiPhoneCall, FiEdit3, FiUpload } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
 import { companies, jobs } from "../utils/data";
 import { CustomButton, JobCard, Loading, TextInput } from "../components";
-import { apiRequest } from "../utils";
+import { apiRequest, handleFileUpload } from "../utils";
 
 import { Login } from "../redux/userSlice";
 
@@ -22,7 +22,7 @@ const CompnayForm = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: { ...user?.user },
+    defaultValues: { ...user },
   });
 
   const dispatch = useDispatch();
@@ -73,7 +73,7 @@ const CompnayForm = ({ open, setOpen }) => {
 
   return (
     <>
-      <Transition appear show={opener ?? false} as={Fragment}>
+      <Transition appear show={open ?? false} as={Fragment}>
         <Dialog as='div' className='relative z-50' onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -214,9 +214,9 @@ const CompanyProfile = () => {
         }
         else
         {
-          id=user?.id;
+          id=user?._id;
         }
-        console.log(id);
+        // console.log(id);
 
         try {
           const res=await apiRequest({
@@ -252,7 +252,7 @@ const CompanyProfile = () => {
           </h2>
 
           {user?.user?.accountType === undefined &&
-            info?._id === user?.user?._id && (
+            info?._id === user?._id && (
               <div className='flex items-center justifu-center py-5 md:py-0 gap-4'>
                 <CustomButton
                   onClick={() => setOpenForm(true)}
