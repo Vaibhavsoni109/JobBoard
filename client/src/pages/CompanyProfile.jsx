@@ -208,6 +208,7 @@ const CompanyProfile = () => {
   const [info, setInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [openForm, setOpenForm] = useState(false);
+  // console.log(user.profileUrl)
 
   const fetchCompany=async()=>
     {
@@ -299,22 +300,18 @@ const CompanyProfile = () => {
         <p>Jobs Posted</p>
 
         <div className='flex flex-wrap gap-3'>
-          {info?.jobsPosts?.map((job, index) => {
-            try {
+          {info?.jobPosts?.map((job, index) => {
+          
               const data = {
                 name: info?.name,
                 email: info?.email,
                 logo:info.profileUrl,
                 ...job,
               };
-              console.log(data)
-            
+              
             
               return <JobCard job={data} key={index} />;
-            } catch (error) {
-              console.log(error);
-            }
-           
+          
           
           })}
         </div>
