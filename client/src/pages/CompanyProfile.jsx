@@ -238,7 +238,7 @@ const CompanyProfile = () => {
         }
        
     }
-// console.log(info.profileUrl)
+// console.log(info)
   useEffect(() => {
     
   fetchCompany();
@@ -300,12 +300,22 @@ const CompanyProfile = () => {
 
         <div className='flex flex-wrap gap-3'>
           {info?.jobsPosts?.map((job, index) => {
-            const data = {
-              name: info?.name,
-              email: info?.email,
-              ...job,
-            };
-            return <JobCard job={data} key={index} />;
+            try {
+              const data = {
+                name: info?.name,
+                email: info?.email,
+                logo:info.profileUrl,
+                ...job,
+              };
+              console.log(data)
+            
+            
+              return <JobCard job={data} key={index} />;
+            } catch (error) {
+              console.log(error);
+            }
+           
+          
           })}
         </div>
       </div>
