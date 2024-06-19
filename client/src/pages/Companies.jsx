@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CompanyCard, CustomButton, Header, ListBox, Loading } from "../components";
-import { companies } from "../utils/data";
+
 import { apiRequest, updateURL } from "../utils";
 
 const Companies = () => {
   const [page, setPage] = useState(1);
   const [numPage, setNumPage] = useState(1);
   const [recordsCount, setRecordsCount] = useState(0);
-  const [data, setData] = useState(companies ?? []);
+  const [data, setData] = useState( []);
   const [searchQuery, setSearchQuery] = useState("");
   const [cmpLocation, setCmpLocation] = useState("");
   const [sort, setSort] = useState("Newest");
@@ -20,7 +20,8 @@ const fetchCompanies=async()=>
   {
 setIsFetching(true);
 const newURL=updateURL({
-  pageNum:searchQuery,
+  pageNum:page,
+  query:searchQuery,
   cmpLoc:cmpLocation,
   sort:sort,
   navigate:navigate,
@@ -34,7 +35,7 @@ try {
   });
 
   setNumPage(res?.numOfPage);
-  setRecordsCount(res?.totalCompanies);
+  setRecordsCount(res?.total);
   setData(res?.data);
 
   setIsFetching(false);
@@ -43,7 +44,12 @@ try {
   
 }
   }
-  const handleSearchSubmit = () => {};
+  const handleSearchSubmit = async(e) => {
+    e.preventDefault();
+    
+    await fetchCompanies();
+    console.log("hello")
+  };
   const handleShowMore = () => {};
 useEffect(()=>{
   fetchCompanies();
@@ -56,7 +62,7 @@ useEffect(()=>{
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         location={cmpLocation}
-        setLocation={setSearchQuery}
+        setLocation={setCmpLocation}
       />
 
       <div className='container mx-auto flex flex-col gap-5 2xl:gap-10 px-5  py-6 bg-[#f7fdfd]'>

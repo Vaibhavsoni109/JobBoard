@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import { Linkedin } from "../assets";
 import moment from "moment";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
-import { useParams } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { jobs } from "../utils/data";
 import { CustomButton, JobCard } from "../components";
+import { useSelector } from "react-redux";
 
 const JobDetail = () => {
   const params = useParams();
   const id = parseInt(params.id) - 1;
   const [job, setJob] = useState(jobs[0]);
   const [selected, setSelected] = useState("0");
+  const use = useSelector((state)=>state.user)
 
   useEffect(() => {
     setJob(jobs[id ?? 0]);
