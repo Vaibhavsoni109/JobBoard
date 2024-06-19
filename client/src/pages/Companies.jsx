@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CompanyCard, CustomButton, Header, ListBox } from "../components";
+import { CompanyCard, CustomButton, Header, ListBox, Loading } from "../components";
 import { companies } from "../utils/data";
+import { apiRequest, updateURL } from "../utils";
 
 const Companies = () => {
   const [page, setPage] = useState(1);
@@ -15,10 +16,38 @@ const Companies = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+const fetchCompanies=async()=>
+  {
+setIsFetching(true);
+const newURL=updateURL({
+  pageNum:searchQuery,
+  cmpLoc:cmpLocation,
+  sort:sort,
+  navigate:navigate,
+  location:location,
+})
 
+try {
+  const res =await apiRequest({
+    url:newURL,
+    method:"GET"
+  });
+
+  setNumPage(res?.numOfPage);
+  setRecordsCount(res?.totalCompanies);
+  setData(res?.data);
+
+  setIsFetching(false);
+} catch (error) {
+  console.log(error);
+  
+}
+  }
   const handleSearchSubmit = () => {};
   const handleShowMore = () => {};
-
+useEffect(()=>{
+  fetchCompanies();
+},[page,sort])
   return (
     <div className='w-full'>
       <Header
@@ -30,10 +59,10 @@ const Companies = () => {
         setLocation={setSearchQuery}
       />
 
-      <div className='container mx-auto flex flex-col gap-5 2xl:gap-10 px-5 md:px-0 py-6 bg-[#f7fdfd]'>
+      <div className='container mx-auto flex flex-col gap-5 2xl:gap-10 px-5  py-6 bg-[#f7fdfd]'>
         <div className='flex items-center justify-between mb-4'>
           <p className='text-sm md:text-base'>
-            Shwoing: <span className='font-semibold'>1,902</span> Companies
+            Shwoing: <span className='font-semibold'>{}{data?.length}</span> Companies
             Available
           </p>
 
