@@ -6,7 +6,7 @@ import { HiLocationMarker } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall, FiEdit3, FiUpload } from "react-icons/fi";
 import { Link, useParams } from "react-router-dom";
-import { companies, jobs } from "../utils/data";
+// import { companies, jobs } from "../utils/data";
 import { CustomButton, JobCard, Loading, TextInput } from "../components";
 import { apiRequest, handleFileUpload } from "../utils";
 
