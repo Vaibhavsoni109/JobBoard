@@ -4,18 +4,41 @@ import moment from "moment";
 import { AiOutlineSafetyCertificate } from "react-icons/ai";
 import { useParams} from "react-router-dom";
 import { jobs } from "../utils/data";
-import { CustomButton, JobCard } from "../components";
+import { CustomButton, JobCard, Loading } from "../components";
 import { useSelector } from "react-redux";
+import { apiRequest } from "../utils";
 
 const JobDetail = () => {
-  const params = useParams();
-  const id = parseInt(params.id) - 1;
-  const [job, setJob] = useState(jobs[0]);
+  const {id} = useParams();
+  const {user} = useSelector((state)=>state.user)
+  
+  const[similarJobs,setSimilarJobs]=useState([])
+  console.log(user.jobPosts)
+ 
+  const [job, setJob] = useState(null);
   const [selected, setSelected] = useState("0");
-  const use = useSelector((state)=>state.user)
+  const [isFetching, setIsFetching]=useState(false);
+
+  const getJobDetail=async()=>
+    {setIsFetching(true)
+      try {
+        
+        const res=await apiRequest({
+          url:"/jobs/get-job-detail/"+id,
+          method:"GET",
+        })
+
+        setJob(res?.data)
+        setSimilarJobs(res?.similarJobs)
+        setIsFetching(false);
+      } catch (error) {
+        setIsFetching(false);
+        console.log(error)
+      }
+    }
 
   useEffect(() => {
-    setJob(jobs[id ?? 0]);
+    id && getJobDetail();
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [id]);
 
@@ -23,7 +46,12 @@ const JobDetail = () => {
     <div className='container mx-auto'>
       <div className='w-full flex flex-col md:flex-row gap-10'>
         {/* LEFT SIDE */}
-        <div className='w-full h-fit md:w-2/3 2xl:2/4 bg-white px-5 py-10 md:px-10 shadow-md'>
+        {
+          isFetching?
+          (
+            <Loading/>
+          ):
+          <div className='w-full h-fit md:w-2/3 2xl:2/4 bg-white px-5 py-10 md:px-10 shadow-md'>
           <div className='w-full flex items-center justify-between'>
             <div className='w-3/4 flex gap-2'>
               <img
@@ -72,7 +100,7 @@ const JobDetail = () => {
             <div className='bg-[#fed0ab] w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
               <span className='text-sm'>No. of Applicants</span>
               <p className='text-lg font-semibold text-gray-700'>
-                {job?.applicants?.length}K
+                {job?.applicants?.length || "NA"}
               </p>
             </div>
 
@@ -113,11 +141,11 @@ const JobDetail = () => {
 
                 <span className='text-base'>{job?.detail[0]?.desc}</span>
 
-                {job?.detail[0]?.requirement && (
+                {job?.detail[0]?.requirements && (
                   <>
                     <p className='text-xl font-semibold mt-8'>Requirement</p>
                     <span className='text-base'>
-                      {job?.detail[0]?.requirement}
+                      {job?.detail[0]?.requirements}
                     </span>
                   </>
                 )}
@@ -145,15 +173,23 @@ const JobDetail = () => {
             />
           </div>
         </div>
+        }
+       
 
         {/* RIGHT SIDE */}
         <div className='w-full md:w-1/3 2xl:w-2/4 p-5 mt-20 md:mt-0'>
           <p className='text-gray-500 font-semibold'>Similar Job Post</p>
 
           <div className='w-full flex flex-wrap gap-4'>
-            {jobs?.slice(0, 6).map((job, index) => (
-              <JobCard job={job} key={index} />
-            ))}
+            {similarJobs?.slice(0, 6).map((job, index) => {
+              const data={
+                name:job?.company?.name,
+                logo:job.company.profileUrl,
+                ...job, 
+
+              }
+            return  <JobCard job={data} key={index} />
+            })}
           </div>
         </div>
       </div>
