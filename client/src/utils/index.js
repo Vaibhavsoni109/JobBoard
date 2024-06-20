@@ -53,7 +53,7 @@ export const updateURL = ({
     sort,
     navigate,
     location,
-    jType,
+    jtype,
     exp,
 }) => {
     const params = new URLSearchParams();
@@ -69,8 +69,8 @@ export const updateURL = ({
     if (sort) {
         params.set("sort", sort)
     }
-    if (jType) {
-        params.set("jType", jType)
+    if (jtype) {
+        params.set("jtype", jtype)
 
     }
     if (exp) {

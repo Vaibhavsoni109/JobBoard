@@ -48,7 +48,7 @@ const FindJobs = () => {
         sort:sort,
         navigate:navigate,
         location:location,
-        jType:filterJobTypes,
+        jtype:filterJobTypes,
         exp:filterExp,
 
       });

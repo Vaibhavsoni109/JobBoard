@@ -122,7 +122,9 @@ export const updateJob = async (req, res, next) => {
 export const getJobPosts = async (req, res, next) => {
   try {
     const { search, sort, location, jtype, exp } = req.query;
-    const types = jtype?.split(","); //full-time,part-time
+    const types = jtype?.split(","); //full-time,'
+    // part-time
+    console.log(jtype)
     const experience = exp?.split("-"); //2-6
 
     let queryObject = {};
