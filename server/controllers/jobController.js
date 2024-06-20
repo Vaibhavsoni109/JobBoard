@@ -192,6 +192,7 @@ export const getJobPosts = async (req, res, next) => {
       data: jobs,
       page,
       numOfPage,
+      jtype,
     });
   } catch (error) {
     console.log(error);

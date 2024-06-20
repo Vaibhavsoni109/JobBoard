@@ -34,6 +34,10 @@ const FindJobs = () => {
       setFilterJobTypes([...filterJobTypes, val]);
     }
   };
+
+  const filterExperience = async (e) => {
+    setFilterExp(e);
+  };
   const fetchJobs=async()=>
     {
       setIsFetching(true)
@@ -50,12 +54,12 @@ const FindJobs = () => {
       });
       try {
         const res= await apiRequest({
-          url: "/jobs"+newURL,
+          url: "/jobs"+ newURL,
           method: "GET",
         })
         console.log(res)
 
-        setNumPage(res.noOfPage);
+        setNumPage(res.numOfPage);
         setRecordCount(res.totalJobs);
         setData(res.data) 
         setIsFetching(false);
@@ -66,10 +70,10 @@ const FindJobs = () => {
       }
     }
 
-  const filterExperience = async (e) => {
-    setFilterExp(e);
-  };
 
+  useEffect(()=>{
+    fetchJobs();
+  },[sort,filterJobTypes,filterExp,page])
   useEffect(()=>{
     if(expVal.length>0)
     {
@@ -87,9 +91,7 @@ const FindJobs = () => {
     
   },[expVal])
 
-  useEffect(()=>{
-    fetchJobs();
-  },[sort,filterJobTypes,filterExp,page])
+ 
 
   return (
     <div>
@@ -165,7 +167,7 @@ const FindJobs = () => {
         <div className='w-full md:w-5/6 px-5 md:px-0'>
           <div className='flex items-center justify-between mb-4'>
             <p className='text-sm md:text-base'>
-              Shwoing: <span className='font-semibold'>1,902</span> Jobs
+              Shwoing: <span className='font-semibold'>{recordCount}</span> Jobs
               Available
             </p>
 
