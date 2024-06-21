@@ -6,6 +6,7 @@ import { HiLocationMarker } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
 import { CustomButton, TextInput } from "../components";
+import { NoProfile } from "../assets";
 
 const UserForm = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.user);
@@ -243,7 +244,7 @@ const UserProfile = () => {
 
             <div className='w-full md:w-1/3 h-44'>
               <img
-                src={userInfo?.profileUrl}
+                src={userInfo?.profileUrl||NoProfile}
                 alt={userInfo?.firstName}
                 className='w-full h-48 object-contain rounded-lg'
               />

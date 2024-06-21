@@ -12,6 +12,7 @@ import Auth from "./pages/Auth";
 import UserProfile from "./pages/UserProfile";
 import JobDetail from "./pages/JobDetail";
 import UploadJob from "./pages/UploadJob";
+import Applications from "./pages/Applications";
 
 function Layout() {
   const { user } = useSelector((state) => state.user);
@@ -40,7 +41,7 @@ function App() {
           <Route path='/companies' element={<Companies />} />
           <Route
             path={
-              user?.user?.accountType === "seeker"
+              user?.accountType === "seeker"
                 ? "/user-profile"
                 : "/user-profile/:id"
             }
@@ -55,6 +56,7 @@ function App() {
 
         <Route path='/about-us' element={<About/>} />
         <Route path='/user-auth' element={<Auth/>} />
+        <Route path='/applications' element={<Applications/>} />
       </Routes>
       {user && <Footer />}
     </main>
