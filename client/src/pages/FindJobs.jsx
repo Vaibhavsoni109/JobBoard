@@ -36,7 +36,13 @@ const FindJobs = () => {
   };
 
   const filterExperience = async (e) => {
-    setFilterExp(e);
+  if(expVal?.includes(e)){
+    setExpVal(expVal?.filter((el)=>el != e))
+  }
+  else{
+    setExpVal([...expVal,e])
+  }
+  
   };
   const fetchJobs=async()=>
     {
@@ -80,12 +86,12 @@ const FindJobs = () => {
       let newExpVal=[];
       expVal?.map((el)=>
       {
-        const newEl=el.split("-");
+        const newEl=el?.split("-");
         newExpVal.push(Number(newEl[0]),Number(newEl[1]));
 
       });
       newExpVal.sort((a,b)=>a - b);
-      setFilterExp(`${newExpVal[0]}-${newExpVal[newExpVal.length()]}`);
+      setFilterExp(`${newExpVal[0]}-${newExpVal[newExpVal.length-1]}`);
     }
 
     
