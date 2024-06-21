@@ -120,7 +120,7 @@ const JobDetail = () => {
                 <div className='bg-[#fed0ab] w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
                   <span className='text-sm'>No. of Applicants</span>
                   <p className='text-lg font-semibold text-gray-700'>
-                    {job?.applicants?.length || "NA"}
+                    {job?.application?.length}
                   </p>
                 </div>
 
@@ -130,6 +130,13 @@ const JobDetail = () => {
                     {job?.vacancies}
                   </p>
                 </div>
+
+                <div className='bg-[#cecdff] w-40 h-16 px-6 rounded-lg flex flex-col items-center justify-center'>
+                  <span className='text-sm'>Yr. of Experience</span>
+                  <p className='text-lg font-semibold text-gray-700'>
+                    {job?.experience}
+                  </p>
+                </div>
               </div>
 
               <div className='w-full flex gap-4 py-5'>
@@ -137,8 +144,8 @@ const JobDetail = () => {
                   onClick={() => setSelected("0")}
                   title='Job Description'
                   containerStyles={`w-full flex items-center justify-center py-3 px-5 outline-none rounded-full text-sm ${selected === "0"
-                      ? "bg-black text-white"
-                      : "bg-white text-black border border-gray-300"
+                    ? "bg-black text-white"
+                    : "bg-white text-black border border-gray-300"
                     }`}
                 />
 
@@ -146,8 +153,8 @@ const JobDetail = () => {
                   onClick={() => setSelected("1")}
                   title='Company'
                   containerStyles={`w-full flex items-center justify-center  py-3 px-5 outline-none rounded-full text-sm ${selected === "1"
-                      ? "bg-black text-white"
-                      : "bg-white text-black border border-gray-300"
+                    ? "bg-black text-white"
+                    : "bg-white text-black border border-gray-300"
                     }`}
                 />
               </div>

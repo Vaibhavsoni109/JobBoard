@@ -95,7 +95,7 @@ useEffect(()=>{
           </p>
         </div>
 
-        {numPage > page && !isFetching && (
+        {numPage > 0 && !isFetching && (
           <div className='w-full flex items-center justify-center pt-16'>
             <CustomButton
               onClick={handleShowMore}

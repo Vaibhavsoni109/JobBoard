@@ -6,7 +6,7 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 import Header from "../components/Header";
 import { experience, jobTypes, jobs } from "../utils/data";
-import { CustomButton, JobCard, ListBox } from "../components";
+import { CustomButton, JobCard, ListBox, Loading } from "../components";
 import { apiRequest, updateURL } from "../utils";
 
 const FindJobs = () => {
@@ -96,15 +96,23 @@ const FindJobs = () => {
 
     
   },[expVal])
+  
+  const handleSearchSubmit=async(e)=>{
+    e.preventDefault();
+    await fetchJobs();
+  }
 
- 
+ const handleShowMore=async(e)=>{
+  e.preventDefault();
+  await fetchJobs();
+ }
 
   return (
     <div>
       <Header
         title='Find Your Dream Job with Ease'
         type='home'
-        handleClick={() => {}}
+        handleClick={handleSearchSubmit}
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         location={jobLocation}
@@ -194,10 +202,18 @@ const FindJobs = () => {
              return <JobCard job={newJob} key={index} />
             })}
           </div>
+          {
+            isFetching && (
+              <div className=" py-10">
+                <Loading/>
+                </div>
+            )
+          }
 
           {numPage > page && !isFetching && (
             <div className='w-full flex items-center justify-center pt-16'>
               <CustomButton
+              onClick={handleShowMore}
                 title='Load More'
                 containerStyles={`text-blue-600 py-1.5 px-5 focus:outline-none hover:bg-blue-700 hover:text-white rounded-full text-base border border-blue-600`}
               />
