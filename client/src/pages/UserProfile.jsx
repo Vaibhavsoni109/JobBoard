@@ -7,6 +7,8 @@ import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
 import { CustomButton, TextInput } from "../components";
 import { NoProfile } from "../assets";
+import { apiRequest, handleFileUpload } from "../utils";
+import { Login } from "../redux/userSlice";
 
 const UserForm = ({ open, setOpen }) => {
   const { user } = useSelector((state) => state.user);
@@ -24,7 +26,29 @@ const UserForm = ({ open, setOpen }) => {
   const [profileImage, setProfileImage] = useState("");
   const [uploadCv, setUploadCv] = useState("");
 
-  const onSubmit = async (data) => {};
+  const onSubmit = async (data) => {
+    try {
+      const uri=profileImage && (await handleFileUpload(profileImage));
+      const newData= uri ? { ...data, profileUrl: uri } : data;
+
+
+      const res= await apiRequest({
+        url:"users/update-user",
+        token:user?.token,
+        data:newData,
+        method:"PUT"
+      });
+
+      if(res){
+        dispatch(Login(res));
+        localStorage.setItem("userInfo",JSON.stringify(res));
+        window.location.reload();
+      }
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const closeModal = () => setOpen(false);
 
