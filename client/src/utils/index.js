@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_URl = "http://localhost:5000/api-v1";
+const API_URl = "https://jobboard-euen.onrender.com/api-v1";
 
 
 export const API = axios.create({
