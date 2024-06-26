@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { HiLocationMarker } from "react-icons/hi";
 import { AiOutlineMail } from "react-icons/ai";
 import { FiPhoneCall } from "react-icons/fi";
-import { CustomButton, TextInput } from "../components";
+import { CustomButton, Loading, TextInput } from "../components";
 import { NoProfile } from "../assets";
 import { apiRequest, handleFileUpload } from "../utils";
 import { Login } from "../redux/userSlice";
@@ -20,14 +20,16 @@ const UserForm = ({ open, setOpen }) => {
     formState: { errors },
   } = useForm({
     mode: "onChange",
-    defaultValues: { ...user?.user },
+    defaultValues: { ...user},
   });
   const dispatch = useDispatch();
   const [profileImage, setProfileImage] = useState("");
   const [uploadCv, setUploadCv] = useState("");
+  const [isFetching, setIsFetching] = useState(false);
 
   const onSubmit = async (data) => {
     try {
+      setIsFetching(true)
       const uri=profileImage && (await handleFileUpload(profileImage));
       const newData= uri ? { ...data, profileUrl: uri } : data;
 
@@ -40,12 +42,14 @@ const UserForm = ({ open, setOpen }) => {
       });
 
       if(res){
-        dispatch(Login(res));
+        const newData={ token: res.token,...res?.user}
+        dispatch(Login(newData));
         localStorage.setItem("userInfo",JSON.stringify(res));
         window.location.reload();
       }
-
+      setIsFetching(flase)
     } catch (error) {
+      setIsFetching(false)
       console.log(error);
     }
   };
@@ -208,11 +212,11 @@ const UserForm = ({ open, setOpen }) => {
                     </div>
 
                     <div className='mt-4'>
-                      <CustomButton
+                      {isFetching ?<Loading/>: <CustomButton
                         type='submit'
                         containerStyles='inline-flex justify-center rounded-md border border-transparent bg-blue-600 px-8 py-2 text-sm font-medium text-white hover:bg-[#1d4fd846] hover:text-[#1d4fd8] focus:outline-none '
                         title={"Submit"}
-                      />
+                      />}
                     </div>
                   </form>
                 </Dialog.Panel>
